@@ -25,7 +25,7 @@ export const sendOtpEmail = async ({to, otp}) => {
 
 // -------------------------------
 // issue registration OTP 
-export const issueRegistrationOtp = async (userEmail) => {
+export const issueRegistrationOtp = async (userEmail,  resentCount) => {
    const user = await User.findOne({email: userEmail});
    if(!user) {
        throw new ApiError(HttpStatus.NOT_FOUND, "User email not found")
@@ -40,12 +40,13 @@ export const issueRegistrationOtp = async (userEmail) => {
 
     await VerificationOtp.create({
         userId : user._id,
+        userEmail,
         purpose : "register",
+        resentCount: resentCount,
         codeHash,
         expiresAt,
         attempts : 0,
-        maxAttempts: 3,
-        resentCount: 0,
+        maxAttempts: 3
     });
 
     await sendOtpEmail({to: userEmail, otp});

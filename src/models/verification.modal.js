@@ -2,6 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 const verificationSchema = new Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    userEmail: { type: String, required: true },
     channel : {type : String , enum : ["email"], default: "email"}, 
     purpose : { type : String, enum : ["register", "reset_password"], required: true},
     codeHash : {type : String, required : true},

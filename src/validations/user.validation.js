@@ -36,6 +36,12 @@ const userRegistrationValidationSchema = vine.object({
     gender: vine.enum(["male", "female", "other"])
 });
 
-const userRegistrationValidation = vine.compile(userRegistrationValidationSchema);
+const userLoginValidationSchema = vine.object({
+    identifier: vine.string().trim().minLength(1), // email or username
+    password: vine.string().minLength(1)
+});
 
-export  { userRegistrationValidation  };
+const userRegistrationValidation = vine.compile(userRegistrationValidationSchema);
+const userLoginValidation = vine.compile(userLoginValidationSchema);
+
+export  { userRegistrationValidation, userLoginValidation  };

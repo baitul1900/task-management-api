@@ -19,6 +19,7 @@ app.use(cookieParser({}));
 
 // route portion
 import userRoutes from "./routes/user/registration.routes.js";
+import loginRoutes from "./routes/user/login.routes.js";
 // import memberRoutes from "./routes/member.routes.js";
 
 import { errorHandler } from "./middlewares/errorHandler.js";
@@ -26,6 +27,7 @@ import { errorHandler } from "./middlewares/errorHandler.js";
 
 
 app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/auth", loginRoutes);
 // app.use("/api/v1/member", memberRoutes);
 
 
