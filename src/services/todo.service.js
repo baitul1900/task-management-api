@@ -72,6 +72,35 @@ class TodoService {
             );
     }
   }
+
+  /**
+   * Get all todos for a user with optional filtering
+   *
+   * @param {String} userId - The ID of the user
+   * @param {Object} filter - Optional filter object (e.g., { completed: true, priority: 'high' })
+   *
+   * @returns {Promise<Array>} Array of todo documents
+   * @throws {ApiError} If retrieval fails
+   *
+   * @example
+   * const todos = await todoService.getAllTodos(userId);
+   * const completedTodos = await todoService.getAllTodos(userId, { completed: true });
+   * const highPriorityPending = await todoService.getAllTodos(userId, { completed: false, priority: 'high' });
+   */
+  async getAllTodos(userId, filter = {}) {
+    try {
+      const query = { owner: userId, ...filter };
+      const todos = await Todo.find(query).sort({ createdAt: -1 });
+
+      return todos;
+    } catch (error) {
+      throw new ApiError(
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        "An error occurred while retrieving todos",
+        error.message
+      );
+    }
+  }
 };
 
 
